@@ -1,0 +1,25 @@
+FROM node:lts-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY donedeal-web/package*.json ./
+
+# Install dependencies
+RUN npm install --verbose
+
+# Install bash
+RUN apk add --no-cache bash
+
+# Copy the rest of the application
+COPY donedeal-web/ .
+
+# Expose port
+EXPOSE 3000
+
+# Set the entrypoint to use /bin/bash
+ENTRYPOINT ["/bin/bash", "-c"]
+
+# Start the application
+CMD ["npm start"]
